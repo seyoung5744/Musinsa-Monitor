@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:43306/minicampus
+    driver-class-name: com.mysql.jdbc.Driver
+    username: minicampus_user
+    password: 1234
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+
+
+
+
+
+
+
