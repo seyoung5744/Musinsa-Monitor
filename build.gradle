@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.7'
+    id 'org.springframework.boot' version '2.5.6' // 2.7.7
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'org.asciidoctor.convert' version '1.5.8'
 }
@@ -24,13 +24,20 @@ ext {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    implementation 'mysql:mysql-connector-java'
+
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
