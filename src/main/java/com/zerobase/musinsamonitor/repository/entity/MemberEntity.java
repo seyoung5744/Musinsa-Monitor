@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,15 +28,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberEntity implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EntityListeners(AuditingEntityListener.class)
+public class MemberEntity extends BaseEntity implements UserDetails {
+    private String email;
 
     private String username;
-
-    private String email;
 
     @JsonIgnore
     private String password;
@@ -42,8 +40,13 @@ public class MemberEntity implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    // 이메일 인증 여부
+    private boolean emailAuthYn;
+    private LocalDateTime emailAuthDt;
+
+    // 메일을 통해서 인증키를 보내주면 해당 인증키가 맞는지를 검사하기 위해 임의의 값을 저장하여 값 비교
+    // 회원가입할 때 key를 만들어서 이메일로 보내주고 보내준 이메일 링크를 통해 인증 절차 진행
+    private String emailAuthKey;
 
     @Override
     @JsonIgnore

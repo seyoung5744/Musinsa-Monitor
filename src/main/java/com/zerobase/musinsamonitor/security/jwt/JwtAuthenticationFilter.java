@@ -1,4 +1,4 @@
-package com.zerobase.musinsamonitor.security;
+package com.zerobase.musinsamonitor.security.jwt;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -29,15 +29,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // 요청의 header에 token이 있는지 확인하고 token이 유효하다면 인증 정보를 context에 담는다.
     // 만약 유효하지 않다면 다음 filter를 거치면서 실행
     @Override
-    protected void doFilterInternal(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        FilterChain filterChain
-    ) throws ServletException, IOException
-    {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = this.resolveTokenFromRequest(request);
 
-        if(StringUtils.hasText(token) && this.tokenProvider.validateToken(token)){
+        if (StringUtils.hasText(token) && this.tokenProvider.validateToken(token)) {
             // 토큰 유효성 검증
             Authentication auth = this.tokenProvider.getAuthorization(token);
 
@@ -51,10 +46,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     /**
      * request에 있는 header로부터 token 얻기
      */
-    private String resolveTokenFromRequest(HttpServletRequest request){
+    private String resolveTokenFromRequest(HttpServletRequest request) {
         String token = request.getHeader(TOKEN_HEADER);
 
-        if(!ObjectUtils.isEmpty(token) && token.startsWith(TOKEN_PREFIX)){
+        if (!ObjectUtils.isEmpty(token) && token.startsWith(TOKEN_PREFIX)) {
             return token.substring(TOKEN_PREFIX.length());
         }
 

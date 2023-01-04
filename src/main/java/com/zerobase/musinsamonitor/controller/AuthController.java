@@ -1,8 +1,10 @@
 package com.zerobase.musinsamonitor.controller;
 
 import com.zerobase.musinsamonitor.model.Auth;
+import com.zerobase.musinsamonitor.model.MemberDto;
+import com.zerobase.musinsamonitor.model.Token;
 import com.zerobase.musinsamonitor.repository.entity.MemberEntity;
-import com.zerobase.musinsamonitor.security.TokenProvider;
+import com.zerobase.musinsamonitor.security.jwt.TokenProvider;
 import com.zerobase.musinsamonitor.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +29,8 @@ public class AuthController {
      * 회원가입을 위한 API
      */
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody Auth.SignUp request) {
-        MemberEntity result = this.memberService.register(request);
+    public ResponseEntity<Object> signup(@RequestBody Auth.SignUp request) {
+        MemberDto result = this.memberService.register(request);
         return ResponseEntity.ok(result);
     }
 
@@ -36,10 +38,8 @@ public class AuthController {
      * 로그인을 위한 API
      */
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody Auth.SignIn request) {
-        MemberEntity member = this.memberService.authenticate(request);
-        String token = this.tokenProvider.generateToken(member.getUsername(), member.getRoles());
-
+    public ResponseEntity<Object> signin(@RequestBody Auth.SignIn request) {
+        Token token = this.memberService.authenticate(request);
         return ResponseEntity.ok(token);
     }
 }

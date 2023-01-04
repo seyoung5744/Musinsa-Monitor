@@ -1,5 +1,7 @@
-package com.zerobase.musinsamonitor.security;
+package com.zerobase.musinsamonitor.security.jwt;
 
+import com.zerobase.musinsamonitor.model.Token;
+import com.zerobase.musinsamonitor.service.MemberDetailService;
 import com.zerobase.musinsamonitor.service.MemberService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -25,7 +27,7 @@ public class TokenProvider {
     private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60; // 1000ms * 60s * 60m : 1 hour
     private static final String KEY_ROLES = "roles";
 
-    private final MemberService memberService;
+    private final MemberDetailService memberDetailService;
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
@@ -37,7 +39,7 @@ public class TokenProvider {
      * @param roles
      * @return
      */
-    public String generateToken(String username, List<String> roles) {
+    public Token generateToken(String username, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put(KEY_ROLES, roles);
 
@@ -47,24 +49,26 @@ public class TokenProvider {
         // 토큰 만료 시간 ( 생성 시간부터 1시간 )
         Date expireDate = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
 
-        return Jwts.builder()
+        String token = Jwts.builder()
             .setClaims(claims)
             .setIssuedAt(now) // 토큰 생성 시간
             .setExpiration(expireDate) // 토큰 만료 시간
             .signWith(SignatureAlgorithm.HS512, this.secretKey) // 사용할 암호화 알고리즘, 비밀키
             .compact();
+
+        return new Token(token);
     }
 
     /**
      * jwt 로부터 인증 정보 가져오기
      */
     public Authentication getAuthorization(String jwt){
-        UserDetails userDetails = this.memberService.loadUserByUsername(this.getEmail(jwt));
+        UserDetails userDetails = this.memberDetailService.loadUserByUsername(this.getEmail(jwt));
         // 사용자 정보, 사용자 권한 정보를 포함한 token
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getEmail(String token){
+    private String getEmail(String token){
         return this.parseClaims(token).getSubject();
     }
 

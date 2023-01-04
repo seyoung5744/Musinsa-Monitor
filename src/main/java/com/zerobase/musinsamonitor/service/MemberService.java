@@ -1,52 +1,57 @@
 package com.zerobase.musinsamonitor.service;
 
 import com.zerobase.musinsamonitor.model.Auth;
-import com.zerobase.musinsamonitor.repository.entity.MemberEntity;
+import com.zerobase.musinsamonitor.model.MemberDto;
+import com.zerobase.musinsamonitor.model.Token;
 import com.zerobase.musinsamonitor.repository.MemberRepository;
+import com.zerobase.musinsamonitor.repository.entity.MemberEntity;
+import com.zerobase.musinsamonitor.security.jwt.TokenProvider;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-@AllArgsConstructor
-public class MemberService implements UserDetailsService {
+@RequiredArgsConstructor
+public class MemberService {
 
-    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // findByUsername는 Optional 값을 return하지만 orElseThrow을 사용했으므로 Optional이 벗겨진 MemberEntity반환
-        return this.memberRepository.findByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("couldn't find user -> " + email));
-    }
+    private final PasswordEncoder passwordEncoder;
+    private final TokenProvider tokenProvider;
 
-    public MemberEntity register(Auth.SignUp member) {
-//        boolean exists = this.memberRepository.existsByUsername(member.getUsername());
-        boolean exists = this.memberRepository.existsByEmail(member.getEmail());
+    public MemberDto register(Auth.SignUp request) {
+        boolean exists = this.memberRepository.existsByEmail(request.getEmail());
+
         if (exists) {
             throw new RuntimeException("이미 사용 중인 이메일입니다.");
         }
 
-        member.setPassword(this.passwordEncoder.encode(member.getPassword()));
+//        request.setPassword(this.passwordEncoder.encode(request.getPassword()));
 
-        return this.memberRepository.save(member.toEntity());
+        String encodedPassword = this.passwordEncoder.encode(request.getPassword());
+
+        return MemberDto.fromEntity(
+            this.memberRepository.save(MemberEntity.builder()
+                .email(request.getEmail())
+                .username(request.getUsername())
+                .password(encodedPassword)
+                .roles(request.getRoles())
+                .build())
+        );
     }
 
     // password 인증
-    public MemberEntity authenticate(Auth.SignIn member) {
-        MemberEntity user = this.memberRepository.findByEmail(member.getEmail())
+    public Token authenticate(Auth.SignIn request) {
+        MemberEntity user = this.memberRepository.findByEmail(request.getEmail())
             .orElseThrow(() -> new RuntimeException("존재하지 않는 Email 입니다."));
 
-        if (!this.passwordEncoder.matches(member.getPassword(), user.getPassword())) {
+        if (!this.passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
-        return user;
+        return this.tokenProvider.generateToken(user.getUsername(), user.getRoles());
     }
 }
