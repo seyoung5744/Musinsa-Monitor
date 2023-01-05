@@ -1,5 +1,8 @@
 package com.zerobase.musinsamonitor.service;
 
+import static com.zerobase.musinsamonitor.exception.ErrorCode.EMAIL_NOT_FOUND;
+
+import com.zerobase.musinsamonitor.exception.CustomException;
 import com.zerobase.musinsamonitor.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +18,8 @@ public class MemberDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // findByUsername는 Optional 값을 return하지만 orElseThrow을 사용했으므로 Optional이 벗겨진 MemberEntity반환
         return this.memberRepository.findByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("couldn't find user -> " + email));
+//            .orElseThrow(() -> new UsernameNotFoundException("couldn't find user -> " + email));
+            .orElseThrow(() -> new CustomException(EMAIL_NOT_FOUND));
     }
 }

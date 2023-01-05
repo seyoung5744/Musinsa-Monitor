@@ -1,12 +1,16 @@
 package com.zerobase.musinsamonitor.service;
 
+import static com.zerobase.musinsamonitor.exception.ErrorCode.EMAIL_ALREADY_USED;
+import static com.zerobase.musinsamonitor.exception.ErrorCode.EMAIL_NOT_FOUND;
+import static com.zerobase.musinsamonitor.exception.ErrorCode.PASSWORD_DO_NOT_MATCH;
+
+import com.zerobase.musinsamonitor.exception.CustomException;
 import com.zerobase.musinsamonitor.model.Auth;
 import com.zerobase.musinsamonitor.model.MemberDto;
 import com.zerobase.musinsamonitor.model.Token;
 import com.zerobase.musinsamonitor.repository.MemberRepository;
 import com.zerobase.musinsamonitor.repository.entity.MemberEntity;
 import com.zerobase.musinsamonitor.security.jwt.TokenProvider;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,10 +30,8 @@ public class MemberService {
         boolean exists = this.memberRepository.existsByEmail(request.getEmail());
 
         if (exists) {
-            throw new RuntimeException("이미 사용 중인 이메일입니다.");
+            throw new CustomException(EMAIL_ALREADY_USED);
         }
-
-//        request.setPassword(this.passwordEncoder.encode(request.getPassword()));
 
         String encodedPassword = this.passwordEncoder.encode(request.getPassword());
 
@@ -46,10 +48,10 @@ public class MemberService {
     // password 인증
     public Token authenticate(Auth.SignIn request) {
         MemberEntity user = this.memberRepository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new RuntimeException("존재하지 않는 Email 입니다."));
+            .orElseThrow(() -> new CustomException(EMAIL_NOT_FOUND));
 
         if (!this.passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(PASSWORD_DO_NOT_MATCH);
         }
 
         return this.tokenProvider.generateToken(user.getUsername(), user.getRoles());
