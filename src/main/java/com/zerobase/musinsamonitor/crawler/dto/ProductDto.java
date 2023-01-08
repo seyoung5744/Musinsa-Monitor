@@ -1,11 +1,11 @@
-package com.zerobase.musinsamonitor.model;
+package com.zerobase.musinsamonitor.crawler.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class Product {
+public class ProductDto {
 
     private int productId;
 
@@ -26,10 +26,6 @@ public class Product {
     private String category;
 
     private int price;
-
-    private int delPrice;
-
-    private int coupon;
 
     private float rating;
 
