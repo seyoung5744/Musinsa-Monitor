@@ -72,7 +72,7 @@ public class TokenProvider {
         return this.parseClaims(token).getSubject();
     }
 
-    public boolean validateToken(String token){
+    public boolean isValidationToken(String token){
         if(!StringUtils.hasText(token)) return false;
 
         Claims claims = this.parseClaims(token);
