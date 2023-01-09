@@ -28,8 +28,8 @@ public class AuthController {
     /**
      * 회원가입을 위한 API
      */
-    @PostMapping("/signup")
-    public ResponseEntity<Object> signup(@RequestBody Auth.SignUp request) {
+    @PostMapping("/sign-up")
+    public ResponseEntity<Object> signUp(@RequestBody Auth.SignUp request) {
         MemberDto result = this.memberService.register(request);
         return ResponseEntity.ok(result);
     }
@@ -37,8 +37,8 @@ public class AuthController {
     /**
      * 로그인을 위한 API
      */
-    @PostMapping("/signin")
-    public ResponseEntity<Object> signin(@RequestBody Auth.SignIn request) {
+    @PostMapping("/sign-in")
+    public ResponseEntity<Object> signIn(@RequestBody Auth.SignIn request) {
         Token token = this.memberService.authenticate(request);
         return ResponseEntity.ok(token);
     }
