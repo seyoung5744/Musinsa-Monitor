@@ -1,28 +1,26 @@
 package com.zerobase.musinsamonitor;
 
-import com.zerobase.musinsamonitor.crawler.MusinsaCrawler;
-import com.zerobase.musinsamonitor.model.CrawledResult;
-import com.zerobase.musinsamonitor.model.constants.Category;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
+@EnableCaching
 public class MusinsaMonitorApplication {
 
-//    private static final int[] pages = {1, 11, 21, 31, 41, 51, 61, 71, 81, 91};
+    //    private static final int[] pages = {1, 11, 21, 31, 41, 51, 61, 71, 81, 91};
     private static final int[] pages = {1};
 
     public static void main(String[] args) {
-//        SpringApplication.run(MusinsaMonitorApplication.class, args);
+        SpringApplication.run(MusinsaMonitorApplication.class, args);
 
-//        MusinsaCrawler musinsaCrawler = new MusinsaCrawler();
-//        CrawledResult crawledResult = null;
-//        for (int startPage : pages) {
-//            crawledResult= musinsaCrawler.crawling(startPage, startPage);
-//        }
+//        Crawler crawler = new MusinsaCrawler();
 //
-//        System.out.println(crawledResult);
+//        CrawledResult result = crawler.crawling();
+//
+//        System.out.println(result);
+//        System.out.println(Category.numToString());
 
-        System.out.println(Category.numToString());
 
     }
 }
