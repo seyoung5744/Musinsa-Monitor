@@ -25,8 +25,6 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private int port;
 
-    private final RedisConnectionFactory redisConnectionFactory;
-
     @Bean
     public RedisConnectionFactory redisConnectionFactory(){
 
@@ -38,7 +36,7 @@ public class RedisConfig {
     }
 
     @Bean
-    public CacheManager redisCacheManager(){
+    public CacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory){
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
             .serializeValuesWith(
@@ -46,7 +44,7 @@ public class RedisConfig {
             );
 
         return RedisCacheManager.RedisCacheManagerBuilder
-            .fromConnectionFactory(this.redisConnectionFactory)
+            .fromConnectionFactory(redisConnectionFactory)
             .cacheDefaults(redisCacheConfiguration)
             .build();
     }
