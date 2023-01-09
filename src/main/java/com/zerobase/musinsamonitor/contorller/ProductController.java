@@ -9,7 +9,9 @@ import com.zerobase.musinsamonitor.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,18 +24,15 @@ public class ProductController {
     private final ProductService productService;
     private final CrawlingService crawlingService;
 
-    @GetMapping("/api/product/brand/list")
-    public Page<String> findBrandList(){
-        return productService.findAllBrand(PageRequest.of(0, 20, Sort.by("brand")));
-    }
 
     @GetMapping("/api/product/brand")
-    public Page<ProductResponseDto> findBrandList(@RequestParam String brandName){
-        return productService.findByBrand(brandName, PageRequest.of(0, 20, Sort.by("productName")));
+    public ResponseEntity<Page<ProductResponseDto>> findProductsByBrand(@RequestParam String brandName, Pageable pageable) {
+        Page<ProductResponseDto> results = productService.findProductsByBrand(brandName, pageable);
+        return ResponseEntity.ok(results);
     }
 
     @PostMapping("/api/product/save")
-    public void saveCrawlingDate(){
+    public void saveCrawlingDate() {
         Crawler crawler = new MusinsaCrawler();
         CrawledResult crawledResult = crawler.crawling();
         crawlingService.save(crawledResult);
