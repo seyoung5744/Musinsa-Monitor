@@ -2,8 +2,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/musinsa_monitor
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: won9975744
+    username: [id]
+    password: [pwd]
 
   jpa:
     generate-ddl: true
@@ -17,19 +17,6 @@ spring:
 
   jwt:
     secret: ZGF5b25lLXNwcmluZy1ib290LW11c2luc2EtbW9uaXRvci1wcm9qZWN0LWp3dC1zZWNyZXQK
-
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: seyoung574458@gmail.com
-    password: ozqghngdsrsxbycz
-    properties:
-      mail:
-        smtp:
-          ssl:
-            protocols: TLSv1.2
-          starttls:
-            enable: true
 
 jasypt:
   encryptor:
