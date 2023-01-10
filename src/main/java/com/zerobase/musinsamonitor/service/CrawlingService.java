@@ -1,12 +1,11 @@
 package com.zerobase.musinsamonitor.service;
 
 import com.zerobase.musinsamonitor.crawler.dto.CrawledResult;
-import com.zerobase.musinsamonitor.crawler.dto.ProductDto;
 import com.zerobase.musinsamonitor.repository.PriceRepository;
 import com.zerobase.musinsamonitor.repository.ProductJpaRepository;
 import com.zerobase.musinsamonitor.repository.ProductQueryRepository;
-import com.zerobase.musinsamonitor.repository.entiry.Price;
-import com.zerobase.musinsamonitor.repository.entiry.Product;
+import com.zerobase.musinsamonitor.repository.entity.Price;
+import com.zerobase.musinsamonitor.repository.entity.Product;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.zerobase.musinsamonitor.repository;
 
-import com.zerobase.musinsamonitor.repository.entiry.Price;
+import com.zerobase.musinsamonitor.repository.entity.Price;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

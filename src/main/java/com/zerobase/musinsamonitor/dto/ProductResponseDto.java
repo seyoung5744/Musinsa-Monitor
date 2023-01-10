@@ -1,6 +1,6 @@
 package com.zerobase.musinsamonitor.dto;
 
-import com.zerobase.musinsamonitor.repository.entiry.Product;
+import com.zerobase.musinsamonitor.repository.entity.Product;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;

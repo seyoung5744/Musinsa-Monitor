@@ -4,8 +4,7 @@ import static com.zerobase.musinsamonitor.repository.entiry.QProduct.product;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zerobase.musinsamonitor.dto.ProductResponseDto;
-import com.zerobase.musinsamonitor.repository.entiry.Product;
-import com.zerobase.musinsamonitor.repository.entiry.QProduct;
+import com.zerobase.musinsamonitor.repository.entity.Product;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
