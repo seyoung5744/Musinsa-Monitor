@@ -15,6 +15,28 @@ spring:
     host: localhost
     port: 6379
 
+  jwt:
+    secret: ZGF5b25lLXNwcmluZy1ib290LW11c2luc2EtbW9uaXRvci1wcm9qZWN0LWp3dC1zZWNyZXQK
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: seyoung574458@gmail.com
+    password: ozqghngdsrsxbycz
+    properties:
+      mail:
+        smtp:
+          ssl:
+            protocols: TLSv1.2
+          starttls:
+            enable: true
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
+
+
 
 
 
