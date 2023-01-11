@@ -1,7 +1,11 @@
 package com.zerobase.musinsamonitor.service;
 
+import static com.zerobase.musinsamonitor.exception.ErrorCode.DO_NOT_SUPPORTED_CATEGORY;
+import static com.zerobase.musinsamonitor.exception.ErrorCode.NON_EXISTENT_BRAND;
+
 import com.zerobase.musinsamonitor.crawler.constants.Category;
 import com.zerobase.musinsamonitor.dto.ProductResponseDto;
+import com.zerobase.musinsamonitor.exception.CustomException;
 import com.zerobase.musinsamonitor.repository.ProductJpaRepository;
 import com.zerobase.musinsamonitor.repository.ProductQueryRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +25,16 @@ public class ProductService {
     public Page<ProductResponseDto> findProductsByBrand(String brandName, Pageable pageable) {
         boolean exists = productJpaRepository.existsByBrand(brandName);
         if (!exists) {
-            throw new RuntimeException("존재하지 않는 브랜드입니다.");
+            throw new CustomException(NON_EXISTENT_BRAND);
         }
 
         return this.productQueryRepository.findByBrand(brandName, pageable);
     }
 
     public Page<ProductResponseDto> findTodayProductsByCategory(Category category, String period, Pageable pageable) {
+        if(!Category.getCategoryList().contains(category.getCategory())){
+            throw new CustomException(DO_NOT_SUPPORTED_CATEGORY);
+        }
         return productQueryRepository.findTodayProductByCategory(category, period, pageable);
     }
 }
