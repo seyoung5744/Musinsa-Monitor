@@ -40,7 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 토큰으로 구현했기 때문에 상태 정보 저장X
             .and()
             .authorizeRequests()
-            .antMatchers("/**/signup", "/**/signin").permitAll()
+            // TODO : api 구현 후 권한 지정하기
+            .antMatchers("/**/sign-up", "/**/sign-in", "/**/**").permitAll()
             .and()
             .addFilterBefore(this.jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class); // 필터 순서 정의
