@@ -1,5 +1,6 @@
 package com.zerobase.musinsamonitor.service;
 
+import com.zerobase.musinsamonitor.crawler.constants.Category;
 import com.zerobase.musinsamonitor.dto.ProductResponseDto;
 import com.zerobase.musinsamonitor.repository.ProductJpaRepository;
 import com.zerobase.musinsamonitor.repository.ProductQueryRepository;
@@ -24,5 +25,9 @@ public class ProductService {
         }
 
         return this.productQueryRepository.findByBrand(brandName, pageable);
+    }
+
+    public Page<ProductResponseDto> findTodayProductsByCategory(Category category, String period, Pageable pageable) {
+        return productQueryRepository.findTodayProductByCategory(category, period, pageable);
     }
 }
