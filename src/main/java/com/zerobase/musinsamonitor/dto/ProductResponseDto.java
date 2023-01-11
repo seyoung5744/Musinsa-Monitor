@@ -15,7 +15,7 @@ public class ProductResponseDto {
     private final String productUrl;
     private final String brand;
     private final String brandUrl;
-    private final LocalDate modifiedDate;
+    private final LocalDate updatedAt;
     private final String category;
     private final int price;
 
@@ -28,7 +28,7 @@ public class ProductResponseDto {
         this.productUrl = product.getProductUrl();
         this.brand = product.getBrand();
         this.brandUrl = product.getBrandUrl();
-        this.modifiedDate = product.getUpdatedAt().toLocalDate();
+        this.updatedAt = product.getUpdatedAt().toLocalDate();
         this.category = product.getCategory();
         this.price = product.getPrice();
     }
