@@ -26,8 +26,9 @@ public class MusinsaCrawler implements Crawler {
         List<ProductDto> productList = new ArrayList<>();
         List<PriceDto> priceList = new ArrayList<>();
 
-        for (String category : Category.numToString()) {
+        for (String category : Category.getCategoryList()) {
             for (int page = START_PAGE; page <= END_PAGE; page++) {
+
                 try {
                     String url = String.format(URL, category, page);
 
