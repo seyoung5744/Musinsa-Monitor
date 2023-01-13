@@ -23,8 +23,6 @@ public class AuthController {
 
     private final MemberService memberService;
 
-    private final TokenProvider tokenProvider;
-
     /**
      * 회원가입을 위한 API
      */

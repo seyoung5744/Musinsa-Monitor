@@ -1,6 +1,7 @@
 package com.zerobase.musinsamonitor.security;
 
 import com.zerobase.musinsamonitor.security.jwt.JwtAuthenticationFilter;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
