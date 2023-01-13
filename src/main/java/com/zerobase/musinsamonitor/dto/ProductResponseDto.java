@@ -1,12 +1,13 @@
 package com.zerobase.musinsamonitor.dto;
 
 import com.zerobase.musinsamonitor.repository.entity.Product;
+import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ProductResponseDto {
+public class ProductResponseDto implements Serializable {
 
     private final int ranking;
     private final int productId;
