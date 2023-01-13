@@ -1,6 +1,6 @@
 package com.zerobase.musinsamonitor.repository;
 
-import static com.zerobase.musinsamonitor.repository.entiry.QProduct.product;
+import static com.zerobase.musinsamonitor.repository.entity.QProduct.product;
 
 import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.dsl.Expressions;
@@ -9,7 +9,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zerobase.musinsamonitor.crawler.constants.Category;
 import com.zerobase.musinsamonitor.dto.ProductResponseDto;
 import com.zerobase.musinsamonitor.repository.entity.Product;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

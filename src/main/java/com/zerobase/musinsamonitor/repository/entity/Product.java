@@ -23,8 +23,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 public class Product implements Serializable {
 
-    @Column(name = "product_id")
     @Id
+    @Column(name = "product_id")
     private int productId;
 
     private String productName;
