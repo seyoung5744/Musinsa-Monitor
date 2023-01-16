@@ -23,16 +23,9 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 public class Product implements Serializable {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-
-    @Column(name = "product_id")
     @Id
+    @Column(name = "product_id")
     private int productId;
-
-//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-//    List<Price> prices = new ArrayList<>();
 
     private String productName;
 
@@ -59,7 +52,6 @@ public class Product implements Serializable {
     private int ratingCount;
 
     private LocalDateTime updatedAt;
-
 
 
     @Builder

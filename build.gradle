@@ -45,6 +45,7 @@ dependencies {
     // querydsl 디펜던시 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 
     runtimeOnly 'com.mysql:mysql-connector-j'
 

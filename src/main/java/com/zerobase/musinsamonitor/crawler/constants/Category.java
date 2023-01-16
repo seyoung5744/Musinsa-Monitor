@@ -15,12 +15,17 @@ public enum Category {
 //    SOCKS(8), // 양말/레그웨어 008
 //    SUNGLASSES(9); // 선글라스/안경테 009
 
-    TOP(1);
+    TOP("001");
 
-    private int number;
+    private String category;
+    private int num;
 
-    Category(int n) {
-        this.number = n;
+    Category(String category) {
+        this.category = category;
+    }
+
+    public String getCategory(){
+        return this.category;
     }
 
     /**
@@ -28,9 +33,9 @@ public enum Category {
      *
      * @return "001"
      */
-    public static List<String> numToString() {
+    public static List<String> getCategoryList() {
         return Arrays.stream(Category.values())
-            .map(e -> String.format("%03d", e.number))
+            .map(Category::getCategory)
             .collect(Collectors.toList());
     }
 
