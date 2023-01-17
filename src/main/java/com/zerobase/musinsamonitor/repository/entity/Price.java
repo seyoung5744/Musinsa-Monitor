@@ -26,11 +26,6 @@ public class Price {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // https://bcp0109.tistory.com/344 - 상품 저장 전에 fk없이 가격을 저장하려고 해서 오류
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
-//    private Product product;
-
     private int productId;
 
     @Column(columnDefinition = "SMALLINT")

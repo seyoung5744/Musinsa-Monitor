@@ -27,6 +27,8 @@ public class ProductDto {
 
     private int price;
 
+    private int coupon;
+
     private float rating;
 
     private int ratingCount;

@@ -96,6 +96,7 @@ public class MusinsaCrawler implements Crawler {
                             .ranking(ranking)
                             .category(category)
                             .price(price)
+                            .coupon(coupon)
                             .rating(rating)
                             .ratingCount(ratingCount)
                             .build();
