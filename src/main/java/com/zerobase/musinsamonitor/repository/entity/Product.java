@@ -47,6 +47,8 @@ public class Product implements Serializable {
 
     private int price;
 
+    private int coupon;
+
     private float rating;
 
     private int ratingCount;
@@ -66,6 +68,7 @@ public class Product implements Serializable {
         this.ranking = productDto.getRanking();
         this.category = productDto.getCategory();
         this.price = productDto.getPrice();
+        this.coupon = productDto.getCoupon();
         this.rating = productDto.getRating();
         this.ratingCount = productDto.getRatingCount();
         this.updatedAt = LocalDateTime.now();
