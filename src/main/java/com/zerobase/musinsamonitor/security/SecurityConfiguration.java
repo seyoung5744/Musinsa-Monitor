@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true) // hasRole을 어노테이션 방식으로 하기 위한 설정
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -35,17 +35,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-            .httpBasic().disable()
+            .httpBasic().disable()// rest api로 서비스를 구현했기 때문에 사용하지 않는 부분 disable
             .csrf().disable()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 토큰으로 구현했기 때문에 상태 정보 저장X
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 토큰으로 구현했기 때문에 상태 정보 저장X
             .and()
-            .authorizeRequests()
-            // TODO : api 구현 후 권한 지정하기
-            .antMatchers("/**/sign-up", "/**/sign-in", "/**/**").permitAll()
+                .authorizeRequests()
+                .antMatchers("/**/sign-up", "/**/sign-in", "/**/**").permitAll()
             .and()
-            .addFilterBefore(this.jwtAuthenticationFilter,
-                UsernamePasswordAuthenticationFilter.class); // 필터 순서 정의
+                .addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // 필터 순서 정의
 
         super.configure(http);
     }

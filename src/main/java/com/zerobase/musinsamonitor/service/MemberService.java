@@ -54,6 +54,6 @@ public class MemberService {
             throw new CustomException(PASSWORD_DO_NOT_MATCH);
         }
 
-        return this.tokenProvider.generateToken(user.getUsername(), user.getRoles());
+        return this.tokenProvider.generateToken(user.getEmail(), user.getRoles());
     }
 }
