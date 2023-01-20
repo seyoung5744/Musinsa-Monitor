@@ -58,9 +58,19 @@ public class CartService {
     }
 
     public void deleteProductFromCart(String deleteNo, String email) {
-        int[] deleteProductsId = Arrays.stream(deleteNo.trim().split(SPLIT_PREFIX)).mapToInt(Integer::parseInt).toArray();
+        int[] deleteProductsId = Arrays.stream(deleteNo.trim().split(SPLIT_PREFIX)).mapToInt(Integer::parseInt)
+            .toArray();
 
+        for (int productId : deleteProductsId) {
+            Product product = productJpaRepository.findByProductId(productId)
+                .orElseThrow(() -> new CustomException(NON_EXISTENT_PRODUCT));
 
+            carRepository.deleteByProductAndEmail(product, email);
+        }
 
+    }
+
+    public Page<CartResponseDto> findAllCartList(String email, Pageable pageable) {
+        return carRepository.findAllByEmail(email, pageable).map(e -> new CartResponseDto(e));
     }
 }

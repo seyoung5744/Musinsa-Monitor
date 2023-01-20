@@ -15,4 +15,6 @@ public interface CarRepository extends JpaRepository<Cart, Long> {
     void deleteByProductAndEmail(Product product, String email);
 
     boolean existsByProductAndEmail(Product product, String email);
+
+    Page<Cart> findAllByEmail(String email, Pageable pageable);
 }

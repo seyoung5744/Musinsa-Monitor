@@ -42,4 +42,13 @@ public class CartController {
         log.info("삭제 : " + deleteNo);
         cartService.deleteProductFromCart(deleteNo, member.getEmail());
     }
+
+    @GetMapping("/cart")
+    public ResponseEntity<Page<CartResponseDto>> findAllCartList(@AuthenticationPrincipal MemberEntity member,
+        Pageable pageable) {
+        Page<CartResponseDto> result = cartService.findAllCartList(member.getEmail(), pageable);
+        return ResponseEntity.ok(result);
+    }
+
+
 }
