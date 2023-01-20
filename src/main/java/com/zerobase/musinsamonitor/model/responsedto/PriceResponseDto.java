@@ -1,4 +1,4 @@
-package com.zerobase.musinsamonitor.dto;
+package com.zerobase.musinsamonitor.model.responsedto;
 
 import com.zerobase.musinsamonitor.repository.entity.Price;
 import java.io.Serializable;

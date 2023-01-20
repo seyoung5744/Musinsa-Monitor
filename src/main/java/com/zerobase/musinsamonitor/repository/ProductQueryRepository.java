@@ -8,7 +8,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zerobase.musinsamonitor.crawler.constants.Category;
-import com.zerobase.musinsamonitor.dto.ProductResponseDto;
+import com.zerobase.musinsamonitor.model.responsedto.ProductResponseDto;
 import com.zerobase.musinsamonitor.repository.entity.Price;
 import com.zerobase.musinsamonitor.repository.entity.Product;
 import java.time.LocalDateTime;

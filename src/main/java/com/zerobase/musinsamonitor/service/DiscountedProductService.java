@@ -1,6 +1,6 @@
 package com.zerobase.musinsamonitor.service;
 
-import com.zerobase.musinsamonitor.dto.ProductAndDiscountResponseDto;
+import com.zerobase.musinsamonitor.model.responsedto.ProductAndDiscountResponseDto;
 import com.zerobase.musinsamonitor.repository.TodayDiscountedProductQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
