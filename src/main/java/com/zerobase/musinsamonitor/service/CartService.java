@@ -3,25 +3,23 @@ package com.zerobase.musinsamonitor.service;
 import static com.zerobase.musinsamonitor.exception.ErrorCode.DUPLICATE_RESOURCE;
 import static com.zerobase.musinsamonitor.exception.ErrorCode.NON_EXISTENT_PRODUCT;
 
-import com.zerobase.musinsamonitor.dto.CartResponseDto;
-import com.zerobase.musinsamonitor.dto.ProductResponseDto;
+import com.zerobase.musinsamonitor.model.requestdto.CartDeleteRequest;
+import com.zerobase.musinsamonitor.model.responsedto.CartResponseDto;
 import com.zerobase.musinsamonitor.exception.CustomException;
-import com.zerobase.musinsamonitor.exception.ErrorCode;
 import com.zerobase.musinsamonitor.repository.CarRepository;
 import com.zerobase.musinsamonitor.repository.ProductJpaRepository;
 import com.zerobase.musinsamonitor.repository.entity.Cart;
 import com.zerobase.musinsamonitor.repository.entity.Product;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import javax.persistence.criteria.CriteriaBuilder.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -57,20 +55,17 @@ public class CartService {
             .build());
     }
 
-    public void deleteProductFromCart(String deleteNo, String email) {
-        int[] deleteProductsId = Arrays.stream(deleteNo.trim().split(SPLIT_PREFIX)).mapToInt(Integer::parseInt)
-            .toArray();
-
-        for (int productId : deleteProductsId) {
+    @Transactional
+    public void deleteProductFromCart(List<Integer> productIds, String email) {
+        for (int productId : productIds) {
             Product product = productJpaRepository.findByProductId(productId)
                 .orElseThrow(() -> new CustomException(NON_EXISTENT_PRODUCT));
 
             carRepository.deleteByProductAndEmail(product, email);
         }
-
     }
 
     public Page<CartResponseDto> findAllCartList(String email, Pageable pageable) {
-        return carRepository.findAllByEmail(email, pageable).map(e -> new CartResponseDto(e));
+        return carRepository.findAllByEmail(email, pageable).map(CartResponseDto::new);
     }
 }

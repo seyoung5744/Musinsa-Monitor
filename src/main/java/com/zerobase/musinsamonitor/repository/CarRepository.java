@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface CarRepository extends JpaRepository<Cart, Long> {
 
-    @Transactional
+//    @Transactional
     void deleteByProductAndEmail(Product product, String email);
 
     boolean existsByProductAndEmail(Product product, String email);
