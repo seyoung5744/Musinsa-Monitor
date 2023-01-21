@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -66,6 +67,7 @@ class MemberServiceTest {
     }
 
     @Test
+    @DisplayName("회원가입 성공")
     void signup_success() {
         //given
         List<String> roles = new ArrayList<>();
@@ -101,6 +103,7 @@ class MemberServiceTest {
     // https://cantcoding.tistory.com/69
 
     @Test
+    @DisplayName("실패-이미 존재하는 이메일일 경우")
     void signup_EmailAlreadyExists() {
         //given
         List<String> roles = new ArrayList<>();
@@ -126,6 +129,7 @@ class MemberServiceTest {
     }
 
     @Test
+    @DisplayName("로그인 성공")
     void login_success() {
         //given
         String encodedPassword = passwordEncoder.encode("1234");
@@ -158,6 +162,7 @@ class MemberServiceTest {
     }
 
     @Test
+    @DisplayName("실패 - 가입되지 않은 이메일일 때")
     void login_fail_emailNotFound() {
         //given
         SignIn request = SignIn.builder()
@@ -177,6 +182,7 @@ class MemberServiceTest {
     }
 
     @Test
+    @DisplayName("실패 - 비밀번호가 틀렸을 때")
     void login_fail_password_do_not_match() {
         //given
         SignIn request = SignIn.builder()
