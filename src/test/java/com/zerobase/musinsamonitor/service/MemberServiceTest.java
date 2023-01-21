@@ -10,6 +10,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.zerobase.musinsamonitor.exception.CustomException;
 import com.zerobase.musinsamonitor.model.Auth;
@@ -30,6 +31,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,6 +50,20 @@ class MemberServiceTest {
     private TokenProvider tokenProvider;
 
 
+    @Test
+    void passwordEncoder() {
+        //given
+        String encode = passwordEncoder.encode("1234");
+        System.out.println(encode);
+
+        //when
+        when(passwordEncoder.encode(anyString()))
+            .thenReturn("안녕하세용");
+
+        System.out.println(passwordEncoder.encode(anyString()));
+        //then
+        assertEquals("안녕하세용", passwordEncoder.encode(anyString()));
+    }
 
     @Test
     void signup_success() {
@@ -128,7 +144,6 @@ class MemberServiceTest {
 
         Token token = new Token("test");
 
-
         given(memberRepository.findByEmail(anyString()))
             .willReturn(Optional.of(entity));
 
@@ -150,7 +165,6 @@ class MemberServiceTest {
             .password("1234")
             .build();
 
-
         given(memberRepository.findByEmail(anyString()))
             .willReturn(Optional.empty());
 
@@ -169,7 +183,6 @@ class MemberServiceTest {
             .email("test1@naver.com")
             .password("1234")
             .build();
-
 
         String encodedPassword = passwordEncoder.encode("1234");
         MemberEntity entity = MemberEntity.builder()
