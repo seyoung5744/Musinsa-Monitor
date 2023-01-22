@@ -5,8 +5,8 @@ import static com.zerobase.musinsamonitor.exception.ErrorCode.NON_EXISTENT_BRAND
 import static com.zerobase.musinsamonitor.exception.ErrorCode.NON_EXISTENT_PRODUCT;
 
 import com.zerobase.musinsamonitor.crawler.constants.Category;
-import com.zerobase.musinsamonitor.dto.ProductAndPricesResponseDto;
-import com.zerobase.musinsamonitor.dto.ProductResponseDto;
+import com.zerobase.musinsamonitor.model.responsedto.ProductAndPricesResponseDto;
+import com.zerobase.musinsamonitor.model.responsedto.ProductResponseDto;
 import com.zerobase.musinsamonitor.exception.CustomException;
 import com.zerobase.musinsamonitor.repository.ProductJpaRepository;
 import com.zerobase.musinsamonitor.repository.ProductQueryRepository;

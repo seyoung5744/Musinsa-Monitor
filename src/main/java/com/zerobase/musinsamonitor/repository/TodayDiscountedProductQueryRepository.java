@@ -1,13 +1,12 @@
 package com.zerobase.musinsamonitor.repository;
 
-import static com.zerobase.musinsamonitor.repository.entity.QProduct.product;
 import static com.zerobase.musinsamonitor.repository.entity.QTodayDiscountedProduct.todayDiscountedProduct;
 
 import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.zerobase.musinsamonitor.dto.ProductAndDiscountResponseDto;
+import com.zerobase.musinsamonitor.model.responsedto.ProductAndDiscountResponseDto;
 import com.zerobase.musinsamonitor.repository.entity.TodayDiscountedProduct;
 import java.time.LocalDateTime;
 import java.util.List;

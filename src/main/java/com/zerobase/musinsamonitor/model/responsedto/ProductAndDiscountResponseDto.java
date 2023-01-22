@@ -1,6 +1,5 @@
-package com.zerobase.musinsamonitor.dto;
+package com.zerobase.musinsamonitor.model.responsedto;
 
-import com.zerobase.musinsamonitor.repository.entity.Product;
 import com.zerobase.musinsamonitor.repository.entity.TodayDiscountedProduct;
 import java.time.LocalDateTime;
 import lombok.Builder;

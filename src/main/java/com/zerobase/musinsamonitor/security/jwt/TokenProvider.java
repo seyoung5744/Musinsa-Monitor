@@ -35,12 +35,12 @@ public class TokenProvider {
     /**
      * 토큰 생성(발급)
      *
-     * @param username
+     * @param email
      * @param roles
      * @return
      */
-    public Token generateToken(String username, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(username);
+    public Token generateToken(String email, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(email);
         claims.put(KEY_ROLES, roles);
 
         // 토큰 생성 시간
@@ -63,12 +63,13 @@ public class TokenProvider {
      * jwt 로부터 인증 정보 가져오기
      */
     public Authentication getAuthorization(String jwt){
+        log.info("유저 이메일 : " + this.getEmail(jwt));
         UserDetails userDetails = this.memberDetailService.loadUserByUsername(this.getEmail(jwt));
         // 사용자 정보, 사용자 권한 정보를 포함한 token
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    private String getEmail(String token){
+    public String getEmail(String token){
         return this.parseClaims(token).getSubject();
     }
 

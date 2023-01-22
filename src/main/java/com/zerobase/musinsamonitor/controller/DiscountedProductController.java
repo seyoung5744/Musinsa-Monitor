@@ -1,7 +1,7 @@
 package com.zerobase.musinsamonitor.controller;
 
 
-import com.zerobase.musinsamonitor.dto.ProductAndDiscountResponseDto;
+import com.zerobase.musinsamonitor.model.responsedto.ProductAndDiscountResponseDto;
 import com.zerobase.musinsamonitor.service.DiscountedProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
