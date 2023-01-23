@@ -8,6 +8,7 @@ import com.zerobase.musinsamonitor.model.responsedto.ProductAndPricesResponseDto
 import com.zerobase.musinsamonitor.model.responsedto.ProductResponseDto;
 import com.zerobase.musinsamonitor.scheduler.MusinsaScheduler;
 import com.zerobase.musinsamonitor.service.ProductService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final ProductService productService;
-//    private final MusinsaScheduler crawlingService;
-
 
     @GetMapping("/product/brand")
+    @ApiOperation("브랜드 별 상품 리스트")
     public ResponseEntity<Page<ProductResponseDto>> findProductsByBrand(@RequestParam String brandName,
         Pageable pageable) {
         Page<ProductResponseDto> results = productService.findProductsByBrand(brandName, pageable);
@@ -35,6 +35,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/best")
+    @ApiOperation("금일 인기 상품 리스트")
     public ResponseEntity<Page<ProductResponseDto>> findTodayProductsByCategory(@RequestParam Category category
         , @RequestParam String period
         , Pageable pageable
@@ -45,15 +46,9 @@ public class ProductController {
     }
 
     @GetMapping("/product/detail")
+    @ApiOperation("상품 상세 정보")
     public ResponseEntity<ProductAndPricesResponseDto> findProductAndPrice(@RequestParam int productId) {
         ProductAndPricesResponseDto result = productService.findProductAndPrice(productId);
         return ResponseEntity.ok(result);
     }
-
-//    @PostMapping("/product/save")
-//    public void saveCrawlingDate() {
-//        Crawler crawler = new MusinsaCrawler();
-//        CrawledResult crawledResult = crawler.crawling();
-//        crawlingService.save(crawledResult);
-//    }
 }
