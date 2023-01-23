@@ -6,7 +6,7 @@ import com.zerobase.musinsamonitor.crawler.constants.Category;
 import com.zerobase.musinsamonitor.crawler.dto.CrawledResult;
 import com.zerobase.musinsamonitor.model.responsedto.ProductAndPricesResponseDto;
 import com.zerobase.musinsamonitor.model.responsedto.ProductResponseDto;
-import com.zerobase.musinsamonitor.service.CrawlingService;
+import com.zerobase.musinsamonitor.scheduler.MusinsaScheduler;
 import com.zerobase.musinsamonitor.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final ProductService productService;
-    private final CrawlingService crawlingService;
+//    private final MusinsaScheduler crawlingService;
 
 
     @GetMapping("/product/brand")
@@ -50,10 +50,10 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/product/save")
-    public void saveCrawlingDate() {
-        Crawler crawler = new MusinsaCrawler();
-        CrawledResult crawledResult = crawler.crawling();
-        crawlingService.save(crawledResult);
-    }
+//    @PostMapping("/product/save")
+//    public void saveCrawlingDate() {
+//        Crawler crawler = new MusinsaCrawler();
+//        CrawledResult crawledResult = crawler.crawling();
+//        crawlingService.save(crawledResult);
+//    }
 }

@@ -1,24 +1,29 @@
-package com.zerobase.musinsamonitor.service;
+package com.zerobase.musinsamonitor.scheduler;
 
+import com.zerobase.musinsamonitor.crawler.Crawler;
+import com.zerobase.musinsamonitor.crawler.MusinsaCrawler;
+import com.zerobase.musinsamonitor.crawler.constants.Category;
 import com.zerobase.musinsamonitor.crawler.dto.CrawledResult;
 import com.zerobase.musinsamonitor.repository.PriceRepository;
 import com.zerobase.musinsamonitor.repository.ProductJpaRepository;
-import com.zerobase.musinsamonitor.repository.ProductQueryRepository;
 import com.zerobase.musinsamonitor.repository.TodayDiscountedProductRepository;
 import com.zerobase.musinsamonitor.repository.entity.Price;
 import com.zerobase.musinsamonitor.repository.entity.Product;
 import com.zerobase.musinsamonitor.repository.entity.TodayDiscountedProduct;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+@Slf4j
+@Component
 @RequiredArgsConstructor
-@Service
-public class CrawlingService {
+public class MusinsaScheduler {
 
     private final ProductJpaRepository productJpaRepository;
 
@@ -26,9 +31,21 @@ public class CrawlingService {
 
     private final TodayDiscountedProductRepository todayDiscountedProductRepository;
 
+
+    @Scheduled(cron = "${scheduler.crawling.time}")
+    public void musinsaScheduling() {
+        Crawler crawler = new MusinsaCrawler();
+        for (String category : Category.getCategoryList()) {
+            log.info("insert new category -> " + category);
+            this.save(
+                crawler.crawling(category)
+            );
+        }
+    }
+
+    @Transactional
     public void save(CrawledResult crawledResult) {
 
-        // 상품 : price, product_icon, product_name, ranking, rating, rating_count 변경 가능성 있음
         List<Product> productEntities = crawledResult.getProducts().stream()
             .map(Product::new)
             .collect(Collectors.toList());
@@ -39,7 +56,7 @@ public class CrawlingService {
             .map(Price::new)
             .collect(Collectors.toList());
 
-        List<Price> prices = this.priceRepository.saveAll(priceEntities);
+        this.priceRepository.saveAll(priceEntities);
 
         if (!ObjectUtils.isEmpty(products)) {
 
